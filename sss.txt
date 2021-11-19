@@ -1,0 +1,60 @@
+<form method = 'post' action = '/register'>
+       <label for= 'name'>Enter Name: </label>
+       <input name = 'name' required>
+ 
+     <div id = "containerContainer">
+       <p>Meeting is on ${day}</p>
+       <div class = "timeContainer">
+         <label class = "timelabel">${t1}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t1">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t2}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t2">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t3}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t3">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t4}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t4">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t5}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t5">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t6}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t6">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t7}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t7" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t8}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t8" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t9}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t9" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel">${t10}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t10" >
+       </div>  
+     </div>
+ 
+     <input type="submit"  value="Submit" name = "userSubmitTimes">
+ 
+   </form>

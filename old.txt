@@ -1,0 +1,322 @@
+const express = require ('express');
+
+const app = express();
+app.use(express.static('static'));
+
+app.use(express.urlencoded({
+    extended:true
+}));
+
+const mysql = require('mysql');
+var conn = mysql.createConnection({
+    host: '35.226.215.177',
+    user: 'root',
+    password: '1qaz!QAZ',
+    database: 'lab3DB'
+});
+
+conn.connect(function(err) {
+    if (err) {
+      console.error('error connecting: ' + err.stack);
+      return;
+    }
+  
+    console.log('connected as id ' + conn.threadId);
+});
+
+
+function getLastID(){
+  let l = 0;
+  conn.query(`SELECT * FROM Meeting`, function(error, results, fields){
+
+    if(error){
+      throw error;
+    }
+    console.log((results));
+    Object.keys(results).forEach(function(key){
+      l = results[key].id;
+      
+    });
+    console.log("last ID # in table: "+ l);
+    
+  });
+  console.log(l);
+  return l;
+}
+
+app.get('/sign-up',  (req, res, next) => {
+    //res.redirect('/sign-up.html')
+   let r = req.body;
+   let lastID=0;  //THIS WAS GONNA BE DYNAMIC BUT I CANT GET IT TO WORK 
+   
+   
+   //display page that grabs stuff from sql. 
+   //use result. Just gonna grab first one. 
+   conn.query(`SELECT * FROM Meeting WHERE id = ${lastID}`, function(error, results, fields){
+       
+       let day = results[lastID].MeetingDay;
+       let t1 = results[lastID].time1;
+       let t2 = results[lastID].time2;
+       let t3 = results[lastID].time3;
+       let t4 = results[lastID].time4;
+       let t5 = results[lastID].time5;
+       let t6 = results[lastID].time6;
+       let t7 = results[lastID].time7;
+       let t8 = results[lastID].time8;
+       let t9 = results[lastID].time9;
+       let t10 = results[lastID].time10;
+    res.send(`
+   <html>
+   <head>
+     <title>Doodle - Sign Up</title>
+     <link rel="stylesheet" href="main.css" />
+     <style>
+     </style>
+   </head>
+ 
+   <center>
+     <body id = "all">
+ 
+       <h1>Please input your name and select the times that work best for you. </h1>
+ 
+ 
+     <form method = 'post' action = '/register'>
+       <label for= 'name'>Enter Name: </label>
+       <input name = 'name' required>
+ 
+     <div id = "containerContainer">
+       <p>Meeting is on ${day}</p>
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l1">${t1}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t1">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l2">${t2}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t2">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l3">${t3}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t3">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l4">${t4}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t4">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l5">${t5}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t5">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l6">${t6}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t6">
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l7">${t7}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t7" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l8" >${t8}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t8" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel name = "l9"">${t9}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t9" >
+       </div>  
+ 
+       <div class = "timeContainer">
+         <label class = "timelabel" name = "l10">${t10}</label>
+         <input type = 'checkbox' id = "timeAvailable" name = "t10" >
+       </div>  
+     </div>
+ 
+     <input type="submit"  value="Submit" name = "userSubmitTimes">
+ 
+   </form>
+ 
+     </body>
+   </center>
+   
+ </html>
+
+    `);
+    
+   });
+
+   
+
+});
+
+
+app.post('/login', function(req, res){
+    let usr = req.body.user;
+    let pss = req.body.pass;
+    let msg = "No way Jose";
+
+    if (usr == "Admin" && pss == "123"){
+        res.redirect('/sign-up-admin.html');
+    }
+    else{
+        console.log(msg);
+        res.redirect('/index-1.html');
+    }
+
+});
+
+app.post('/submit_meeting', function(req, res){
+    let r = req.body;
+    
+    let lastID=getLastID();
+    
+
+    conn.query(
+        `INSERT INTO Meeting VALUES(${lastID},'${r.day}','${r.time1 || 0}','${r.time2 || 0}','${r.time3|| 0}','${r.time4|| 0}',
+        '${r.time5|| 0}','${r.time6|| 0}','${r.time7|| 0}','${r.time8|| 0}','${r.time9|| 0}','${r.time10|| 0}'
+        )`, function(error, results, fields){
+            if(results != null){
+                console.log("Update Meeting table.")
+            }else{
+                console.log("Something went wrong.")
+                console.log(error);
+                console.log(fields);
+            }
+        });
+
+    let content = `<html>
+    <head>
+      <title>Doodle 2.0</title>
+      
+      <script src = "handler.js"></script>
+      <style>
+      #all {
+        border: navy solid 5px;
+        background-color: DodgerBlue;
+        color:white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      </style>
+    </head>
+  
+    <center>
+      <header>
+      <h1>Doodle 2.0 - SE 3316 Edition <br> You have created a new meeting for ${r.day} with the first time being at ${r.time1}</h1>
+      </header>
+
+    <body id ='all'>
+      
+      <a href = "index.html"><h1>Back to Homepage</h1></a>
+    </body>
+     
+    </center>
+  
+  </html>`;
+
+  res.send(content);
+
+});
+
+app.get('/view-meetings', function(req, res){
+  conn.query(`SELECT * FROM GuestMeeting`, function(error, results, fields){
+    console.log(results);
+  });
+});
+
+app.get('/resetDB', function(req, res){
+    conn.query(`
+        TRUNCATE TABLE Meeting
+    `
+    );
+    conn.query(`
+        TRUNCATE TABLE GuestMeeting
+    `
+    );
+    console.log('Meeting + GuestTimes Relations have been RESET');
+    res.redirect('index.html');
+    
+});
+
+app.post('/register', function(req, res, next){
+    let r = req.body;
+    let day;
+    //console.log(r.name);
+    
+    let lastID = 0;
+    let timeSlots = []
+    
+
+    conn.query(`SELECT * FROM Meeting WHERE id = ${lastID}`, function(error, results, fields){
+        day = results[lastID].MeetingDay;
+        timeSlots[0] = results[lastID].time1;
+        timeSlots[1] = results[lastID].time2;
+        timeSlots[2] = results[lastID].time3;
+        timeSlots[3] = results[lastID].time4;
+        timeSlots[4] = results[lastID].time5;
+        timeSlots[5] = results[lastID].time6;
+        timeSlots[6] = results[lastID].time7;
+        timeSlots[7] = results[lastID].time8;
+        timeSlots[8] = results[lastID].time9;
+        timeSlots[9] = results[lastID].time10;
+
+        let timeChecks = []
+        timeChecks[0] = r.t1||'off';
+        timeChecks[1] = r.t2||'off';
+        timeChecks[2] = r.t3||'off';
+        timeChecks[3] = r.t4||'off';
+        timeChecks[4] = r.t5||'off';
+        timeChecks[5] = r.t6||'off';
+        timeChecks[6] = r.t7||'off';
+        timeChecks[7] = r.t8||'off';
+        timeChecks[8] = r.t9||'off';
+        timeChecks[9] = r.t10||'off';
+    
+    msg = "";
+
+    for(let i = 0; i < timeChecks.length; i++){
+        if (timeChecks[i] == 'on'){
+            conn.query(`INSERT INTO GuestMeeting VALUES('${day}','${timeSlots[i]}','${r.name}');
+            `, function(error, results, fields){
+                if (error == null){
+                    console.log("Updated GuestMeeting table");
+                    msg += `${timeSlots[i]}, `;
+                }else{
+                    console.log(error);
+                }
+            }
+            )
+        }
+    }
+    });
+    console.log(day);
+    console.log(timeSlots);
+
+    //THIS IS BROKEN IT IS INSERTING 'ON' WHICH IS NO GOOD
+    
+
+    res.send(`
+    <html>
+    <head>
+      <title>You're In.</title>
+      <link rel="stylesheet" href="main.css" />
+      <style>
+      </style>
+    </head>
+  
+    <center>
+      <body id = "all">
+        <h1>You have been added to your specified meetings.</h1>
+        
+        <a href = 'index.html'><h1>Back to Homepage</h1></a>
+      </body>
+    </center>
+    `);
+    //ADD user to the corresponding column number based on r.t1 t2 t3... t10
+});
+
+app.listen(80);

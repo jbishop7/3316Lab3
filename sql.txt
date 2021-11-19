@@ -1,0 +1,57 @@
+/*
+conn.query(`SELECT * FROM Meeting`, function(error, r, f){
+  console.log(r);
+});
+conn.query(`SELECT * FROM Admin`, function(error, r, f){
+  console.log(r);
+});
+conn.query(`SELECT * FROM GuestMeeting`, function(error, r, f){
+  console.log(r);
+});/*
+conn.query(`INSERT INTO Meeting VALUES ('Moonday', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 1)`, function(error, r, f){
+  console.log(r);
+});
+conn.query(`SELECT * FROM Meeting`, function(error, r, f){
+  console.log(r);
+});
+
+//conn.query(`DROP TABLE Meeting`);
+
+/*
+conn.query(
+    `CREATE TABLE Admin(
+        userName varchar(20), password varchar(20)
+        );`, function(error, results, fields){
+            console.log("eRROR MSG: " + error);
+            console.log("result MSG: " +results);
+            console.log("Fields msg " +fields);
+        }
+);
+
+
+
+conn.query(
+    `CREATE TABLE Meeting(
+         id int, MeetingDay varchar(20) NOT NULL, time1 varchar(20), time2 varchar(20), time3 varchar(20),
+         time4 varchar(20), time5 varchar(20), time6 varchar(20), time7 varchar(20),
+          time8 varchar(20), time9 varchar(20), time10 varchar(20)
+        );`, function(error, results, fields){
+            console.log("eRROR MSG: " + error);
+            console.log("result MSG: " );
+            console.log(results);
+            console.log("Fields msg " +fields);
+        }
+);
+conn.query(`INSERT INTO Meetings VALUES('test', 'test','test', 'test','test', 'test','test', 'test','test', 'test','test', 1)`)
+/*
+conn.query(
+    `CREATE TABLE GuestMeeting(
+    MeetingDay varchar(20) NOT NULL, time varchar(20), GuestName varChar(20) NOT NULL
+    );`, function(error, results, fields){
+    console.log("eRROR MSG: " + error);
+    console.log("result MSG: " );
+    console.log(results);
+    console.log("Fields msg " +fields);
+}
+);
+//*/

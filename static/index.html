@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Doodle 2.0</title>
+    <link rel="stylesheet" href="main.css" />
+    
+    <style>
+    </style>
+  </head>
+
+  <center>
+  <header>
+    <h1>Doodle 2.0 - SE 3316 Edition <br> Welcome to Doodle. Please log in as admin or continue as a guest.</h1>
+    <h1>If you haven't created a DB, DO NOT continue as a guest. It will crash.</h1>
+    <p>Reset the Database, then continue as an admin with the given credentials to create your meeting date and times.</p>
+  </header>
+    <body id= "all">
+      <p>User = Admin <br>Pass = 123</p>
+      <form  method = "post" action = "/login">
+        <label for="user">Username: </label>
+        <input name = "user" required>
+        <label for="user">Password: </label>
+        <input type = "password" name = "pass" required>
+        <input type = "submit" value = "Continue as Admin" name = "loginAdmin"> 
+      </form>
+
+      
+      <form method="get" action= "/sign-up" >
+        <input type="submit"  value="Continue as Guest" name = "loginGuest">
+      </form>
+
+      <form method="get" action= "/view-meetings" >
+        <input type="submit"  value="View Meetings" name = "viewMeetings">
+      </form>
+
+      <form method="get" action= "/resetDB" >
+        <input type="submit"  value="Reset Database" name = "resetDB">
+      </form>
+   
+
+    
+
+    </body>
+  </center>
+
+</html>

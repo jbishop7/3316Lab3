@@ -1,0 +1,16 @@
+{
+  "name": "lab3",
+  
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Haha we are testing now I guess NEEEAUHHHH\\\" && exit 1"
+  },
+  "author": "rbishop7",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1"
+  }
+}
